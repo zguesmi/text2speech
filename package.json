@@ -1,0 +1,19 @@
+{
+  "name": "tts-dapp",
+  "version": "1.0.0",
+  "description": "A simple dapp to convert text to speech",
+  "main": "iexec.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zied-Guesmi/tts-dapp.git"
+  },
+  "author": {
+    "name": "Zied Guesmi"
+  },
+  "license": "",
+  "homepage": "https://github.com/Zied-Guesmi/tts-dapp.git",
+  "logo": "logo.png",
+  "dependencies": {
+    "iexec-oracle-contract": "1.1.7"
+  }
+}
