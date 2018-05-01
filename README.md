@@ -1,6 +1,6 @@
 # TTS-Dapp
 
-![dapp logo](./logo.png)
+![dapp logo](./logo.svg)
 
 
 ## Description

@@ -12,7 +12,7 @@
   },
   "license": "",
   "homepage": "https://github.com/Zied-Guesmi/tts-dapp.git",
-  "logo": "logo.png",
+  "logo": "logo.svg",
   "dependencies": {
     "iexec-oracle-contract": "1.1.7"
   }
