@@ -4,7 +4,7 @@
 
 
 ## Description
-This dapp uses [mimic](https://github.com/MycroftAI/mimic) to convert input text to speech.  
+This dapp uses [mimic](https://github.com/MycroftAI/mimic) text-to-speech engine to convert text files to speech.  
 
 ## Usage
     # Help
@@ -12,6 +12,7 @@ This dapp uses [mimic](https://github.com/MycroftAI/mimic) to convert input text
 
     # Speak a text file
     $ python3 tts.py -f foo.txt -v ap -lat 0.9
+    $ <open> out.wav
 
 ## Supported languages
 English (until now)
@@ -24,12 +25,13 @@ See voice samples [here](https://github.com/Zied-Guesmi/tts-dapp.git).
 [mimic](https://github.com/MycroftAI/mimic)  
 
 ## Docker installation
-Install [docker](https://docs.docker.com/install/)
+* Install [docker](https://docs.docker.com/install/)
+* Get the docker image from docker hub
 
     $ docker run -v .:/app/ ziedguesmi/tts -f foo.txt
     $ <open> ./out.wav
 
-or
+* or build the image locally
 
     # clone the dapp
     $ git clone https://github.com/Zied-Guesmi/tts-dapp.git
@@ -68,7 +70,7 @@ Install mimic tts engine
     $ ./configure --prefix="/usr/local"
     $ make
 
-Clone the tts dapp
+Clone the tts-dapp
 
     $ cd ..
     $ git clone https://github.com/Zied-Guesmi/tts-dapp.git
