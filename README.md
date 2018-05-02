@@ -32,7 +32,7 @@ See voice samples [here](https://github.com/Zied-Guesmi/tts-dapp.git).
     $ <open> ./out.wav
 
 * or build the image locally
-
+    ```
     # clone the dapp
     $ git clone https://github.com/Zied-Guesmi/tts-dapp.git
 
@@ -44,6 +44,7 @@ See voice samples [here](https://github.com/Zied-Guesmi/tts-dapp.git).
     $ docker run -v .:/app/ tts-dapp -f foo.txt
 
     $ <open> ./out.mp3
+    ```
 
 ## Installation
 Install system dependencies:
