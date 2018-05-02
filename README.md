@@ -27,9 +27,10 @@ See voice samples [here](https://github.com/Zied-Guesmi/tts-dapp.git).
 ## Docker installation
 * Install [docker](https://docs.docker.com/install/)
 * Get the docker image from docker hub
-
+    ```
     $ docker run -v .:/app/ ziedguesmi/tts -f foo.txt
     $ <open> ./out.wav
+    ```
 
 * or build the image locally
     ```
