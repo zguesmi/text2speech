@@ -1,0 +1,6 @@
+version: '3'
+
+services:
+  ocr-dapp:
+    build: '.'
+    image: tts-dapp

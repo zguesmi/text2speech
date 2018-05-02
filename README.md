@@ -4,26 +4,30 @@
 
 
 ## Description
-This dapp uses ..... to convert text to speech.  
+This dapp uses [mimic](https://github.com/MycroftAI/mimic) to convert input text to speech.  
 
 ## Usage
     # Help
     $ python3 tts.py -h
 
-    # 
-    $ python3 tts.py <......> 
+    # Speak a text file
+    $ python3 tts.py -f foo.txt -v ap -lat 0.9
 
 ## Supported languages
-English (en), Spanish (es), Frensh (fr), Arabic (ar), German (de), Chinese simple (zh), Italian (it), Japanese (ja), Portuguese (pt), Russian (ru), Turkish (tr), Korean (ko).
+English (until now)
+
+## Voices
+See voice samples [here](https://github.com/Zied-Guesmi/tts-dapp.git).
 
 ## Dependencies
 [python3](https://www.python.org/)  
+[mimic](https://github.com/MycroftAI/mimic)  
 
 ## Docker installation
 Install [docker](https://docs.docker.com/install/)
 
-    $ docker run -v .:/app/ ziedguesmi/tts <......>
-    $ open ./out.mp3
+    $ docker run -v .:/app/ ziedguesmi/tts -f foo.txt
+    $ <open> ./out.wav
 
 or
 
@@ -35,19 +39,46 @@ or
     $ docker build -t tts-dapp .
 
     # run the docker container
-    $ docker run -v .:/app/ tts-dapp <......>
+    $ docker run -v .:/app/ tts-dapp -f foo.txt
 
-    $ open ./out.mp3
+    $ <open> ./out.mp3
 
-## Native installation
+## Installation
 Install system dependencies:
 
     $ apt-get update && apt-get install -y \
+        automake \
+        gcc \
+        git \
+        libasound2-dev \
+        libtool \
+        make \
+        pkg-config \
         python3 \
-        python3-pip
-        
+        python3-pip \
+        unzip \
+        wget
+
+Install mimic tts engine
+
+    $ git clone https://github.com/MycroftAI/mimic.git
+    $ cd ./mimic
+    $ ./dependencies.sh --prefix="/usr/local"
+    $ ./autogen.sh
+    $ ./configure --prefix="/usr/local"
+    $ make
+
+Clone the tts dapp
+
+    $ cd ..
+    $ git clone https://github.com/Zied-Guesmi/tts-dapp.git
+
+
 Install python depedencies:
 
-    $ git clone https://github.com/Zied-Guesmi/tts-dapp.git
     $ cd tts-dapp/app/
     $ pip3 install -r requirements.txt
+
+
+## TODO
+Add directory support.
