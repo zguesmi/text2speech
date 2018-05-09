@@ -4,7 +4,7 @@
 
 
 ## Description
-This dapp uses [mimic](https://github.com/MycroftAI/mimic) text-to-speech engine to convert text files to speech.  
+This dapp uses [mimic](https://github.com/MycroftAI/mimic) tts engine to convert text files to speech.  
 
 ## Usage
     # Help
@@ -32,7 +32,7 @@ See voice samples [here](https://github.com/Zied-Guesmi/tts-dapp.git).
     $ <open> ./out.wav
     ```
 
-* or build the image locally
+or build the image locally
     ```
     # clone the dapp
     $ git clone https://github.com/Zied-Guesmi/tts-dapp.git
