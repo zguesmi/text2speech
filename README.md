@@ -8,20 +8,23 @@ text2speech is an Ethereum ready dapp that uses [mimic](https://github.com/Mycro
 
 ## Usage
 
-Bring your text files together in a folder (exp: DATADIR) and add an ```input-config.yml``` file in the same folder. This configuration defines parameters for each text to be pronounced and it should respect the 
+Bring your text files together in a folder (exp: DATADIR) and add an ```input-config.yml``` file in the same folder. This configuration defines parameters for each text to be pronounced and it should respect the following format:
 
-    <imagename>:
+    <imagename 1>:
+        voice: <voice name>
+        latency: <value>
+    <imagename 2>:
         voice: <voice name>
         latency: <value>
 
-format. You can keep voice and latency values empty the app will use default values.
+You can keep voice and latency values empty the app will use default values.
 
 ![screenshot](./images/screenshot-1.png)
 
 In the ```app/app-config.yml``` file, change the datadir parameter to the path of your folder (DATADIR for our example) and run the script.
 
     $ git clone https://github.com/Zied-Guesmi/text2speech.git && cd text2speech/
-    $ sed "s/\/iexec/ <path/to/datadir/folder> /" app/app-config.yml
+    $ sed -i "s/\/iexec/<path/to/datadir/folder>/" app/app-config.yml
     $ python3 app/src/app.py
 
 You shoud find your speech files in the ```DATADIR/out/``` folder.
@@ -109,9 +112,9 @@ Install python depedencies:
 
 ## Authors
 
-* **Zied Guesmi** - [Zied-Guesmi](https://github.com/Zied-Guesmi)
+**[Zied-Guesmi](https://github.com/Zied-Guesmi)**
 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/Zied-Guesmi/text2speech/blob/master/LICENSE) file for details
