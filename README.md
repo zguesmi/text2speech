@@ -112,7 +112,7 @@ Install python depedencies:
 
 ## Authors
 
-**[Zied-Guesmi](https://github.com/Zied-Guesmi)**
+**[Zied Guesmi](https://github.com/Zied-Guesmi)**
 
 
 ## License
