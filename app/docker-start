@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd /text-to-speech/src/
+python3 app.py

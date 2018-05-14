@@ -27,4 +27,9 @@ node_modules
 # Optional REPL history
 .node_repl_history
 
-voice-samples
+.DS_Store
+__pycache__
+datadir.sh
+DATADIR
+wallet.json
+account.json

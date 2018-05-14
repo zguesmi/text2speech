@@ -1,45 +1,45 @@
-import argparse, os, sys, subprocess
-
+import os, sys, subprocess
+import custom_exceptions as customExceptions
 
 class TTS:
-        
-    def textToSpeech(self, filename, voice, latency, out):
-        cmd = [ "/mimic/mimic", "-f", filename, "-voice", voice, "--setf", "duration_stretch={}".format(latency), "-o", out ]
-        try:
-            subprocess.call(cmd)
-        except Exception as e:
-            sys.exit(e)
 
+    '''
+        this class uses mimic tts engine to convert text file to speech and saves
+        it to a wav file
+    '''
 
-class App:
-
-    OUTPUT_FILE = 'out.wav'     
+    _VOICES = ['ap', 'awb_time', 'awb', 'kal', 'kal16', 'rms', 'slt_hts', 'slt']
+    _DEFAULT_VOICE = 'ap'
+    _MIN_LATENCY, _MAX_LATENCY, _DEFAULT_LATENCY = 0.0, 2.0, 1.0
+    _CMD = '/mimic/mimic -f {} -voice {} --setf duration_stretch={} -o {}'
 
     def __init__(self):
-        self.parseArgs()
-        if not os.path.isfile(self.args['file']):
-            sys.exit('No such file: {}'.format(self.args['file']))
+        pass
 
-    def parseArgs(self):
-
-        argParser = argparse.ArgumentParser()
-        argParser.add_argument('-f', '--file', required=True, help='Path to input file', type=str)
-        argParser.add_argument('-v', '--voice', required=False, help='Speech\'s voice', type=str,
-            choices=['ap', 'slt', 'slt_hts', 'kal', 'awb', 'kal16', 'rms', 'awb_time'], default='ap')
-        argParser.add_argument('-lat', '--latency', required=False, help='Speech\'s latency', type=str,
-            choices=[str(p/10) for p in range(0, 20)], default='1.0')
-
-        self.args = vars(argParser.parse_args())
-
-    def main(self):
-
-        TTS().textToSpeech(
-            filename=self.args['file'],
-            voice=self.args['voice'],
-            latency=self.args['latency'],
-            out=self.OUTPUT_FILE
-        )
-
-if __name__ == '__main__':
-    App().main()
     
+    def _isLegalVoiceName(self, voice):
+        if not voice in self._VOICES:
+            raise customExceptions.IllegalVoiceNameError(voice, self._DEFAULT_VOICE)
+
+
+    def _isLegalLatency(self, latency):
+        if not (self._MIN_LATENCY <= latency and latency <= self._MAX_LATENCY):
+            raise customExceptions.IllegalLatencyError(latency, self._DEFAULT_LATENCY)
+
+
+    def textToSpeech(self, path, voice, latency, out):
+
+        try:
+            self._isLegalVoiceName(voice)
+        except customExceptions.IllegalVoiceNameError:
+            voice = self._DEFAULT_VOICE
+
+        try:
+            self._isLegalLatency(latency)
+        except customExceptions.IllegalLatencyError:
+            latency = self._DEFAULT_LATENCY
+
+        try:
+            subprocess.call(self._CMD.format(path, voice, latency, out).split())
+        except Exception as e:
+            raise customExceptions.CanNotConvertTextToSpeechError(path, e)
