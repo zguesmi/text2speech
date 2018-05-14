@@ -47,7 +47,7 @@ class FileTypeNotSupportedError(CustomError):
 
 class IllegalVoiceNameError(CustomError):
 
-    message = 'Unsupported voice - "{}"\nDefaulting to "{}.."'
+    message = 'Unsupported voice - "{}"\nDefaulting to "{}"'
 
     def __init__(self, voice, default):
         super().__init__(self.message.format(voice, default))
@@ -55,7 +55,7 @@ class IllegalVoiceNameError(CustomError):
 
 class IllegalLatencyError(CustomError):
 
-    message = 'Illegal latency value - "{}"\nLatency should be in [0.0 .. 2.0]. Defaulting to "{}"..'
+    message = 'Illegal latency value - "{}"\nLatency should be in [0.0 .. 2.0]. Defaulting to "{}"'
 
     def __init__(self, latency, default):
         super().__init__(self.message.format(latency, default))
