@@ -9,10 +9,12 @@ RUN apt-get update && apt-get install -y \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-COPY ./app/ /tts
+COPY ./app /text2speech
 
-WORKDIR /app
+RUN pip3 install -r /text2speech/requirements.txt
 
-RUN pip3 install -r requirements.txt
+RUN mkdir /iexec
 
-ENTRYPOINT ['/tts/docker-start']
+WORKDIR /mimic
+
+ENTRYPOINT [ "/text2speech/docker-start" ]

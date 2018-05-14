@@ -2,7 +2,7 @@
 ### DON'T add trailing slashes in dir names
 
 # your text files folder absolute/relative (to the app.py script) path
-datadir: ../../DATADIR
+datadir: /iexec
 
 
 # If you're not sure do not edit this section, it's used by the app

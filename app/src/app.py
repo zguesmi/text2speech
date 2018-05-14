@@ -8,12 +8,10 @@ from tts import TTS
 
 class App:
 
-    APP_CONFIG_FILE = '../app-config.yml'
-    _SUPPORTED_IMAGES = [ ]
-
+    APP_CONFIG_FILE = '{}/../app-config.yml'.format(os.path.dirname(os.path.realpath(__file__)))
     _taskStartedFlag = '-> processing file {}'
     _taskEndedFlag = 'done..'
-    _executionEndedFlag = 'Supported images have been moved to "{}" folder. Text files have been saved in "{}" folder.'
+    _executionEndedFlag = 'Text files have been moved to "{}" folder. Sound files are saved in "{}" folder.'
 
 
     def __init__(self):
