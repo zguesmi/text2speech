@@ -17,7 +17,7 @@ Bring your text files together in a folder (exp: DATADIR) and add an ```input-co
         voice: <voice name>
         latency: <value>
 
-You can keep voice and latency values empty the app will use default values.
+You can keep voice and latency values empty the app will use default values ("ap" as voice and 1.0 as latency).
 
 ![screenshot](./images/screenshot-1.png)
 
