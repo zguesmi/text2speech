@@ -89,4 +89,5 @@ Install python depedencies:
 
 ## TODO
 - Support more languages.
-- Reduce mimic docker image size
+- Add more mimic voices.
+- Reduce mimic docker image size.
