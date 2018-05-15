@@ -44,8 +44,8 @@ See voice samples [here](https://github.com/Zied-Guesmi/text2speech/tree/master/
 
 ## Dependencies
 
-[python3](https://www.python.org/)  
-[mimic](https://github.com/MycroftAI/mimic) tts engine
+- [python3](https://www.python.org/)  
+- [mimic](https://github.com/MycroftAI/mimic) tts engine
 
 
 ## Docker installation
@@ -112,7 +112,7 @@ Install python depedencies:
 
 ## Authors
 
-**[Zied Guesmi](https://github.com/Zied-Guesmi)**
+- **[Zied Guesmi](https://github.com/Zied-Guesmi)**
 
 
 ## License
