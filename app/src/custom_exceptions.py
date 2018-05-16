@@ -1,4 +1,4 @@
-import sys, yaml
+import sys
 
 
 class FatalError(Exception):
@@ -7,15 +7,31 @@ class FatalError(Exception):
         sys.exit(message)
 
 
-class ConfigFileNotFoundError(FatalError):
+class AppConfigNotFoundError(FatalError):
 
-    message = 'Input config file not found - {}'
+    message = 'Can not load app config file - {}'
 
     def __init__(self, filename):
         super().__init__(self.message.format(filename))
 
 
-class UnrespectedConfigFormatError(FatalError):
+class InputConfigNotFoundError(FatalError):
+
+    message = 'Can not load input config file - {}'
+
+    def __init__(self, filename):
+        super().__init__(self.message.format(filename))
+
+
+class IllegalAppConfigFormatError(FatalError):
+
+    message = 'Error parsing app config file\n{}'
+
+    def __init__(self, err):
+        super().__init__(self.message.format(err))
+
+
+class IllegalInputConfigFormatError(FatalError):
 
     message = 'Error parsing input config file - required format is name:lang\n{}'
 

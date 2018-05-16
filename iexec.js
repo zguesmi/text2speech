@@ -1,10 +1,11 @@
 module.exports = {
-  name: 'tts-dapp',
+  name: 'text2speech',
   app: {
     type: 'DOCKER',
-    envvars: 'XWDOCKERIMAGE=docker-image-name',
+    envvars: 'XWDOCKERIMAGE=ziedguesmi/text2speech',
   },
   work: {
-    cmdline: 'cli arguments',
+    cmdline: '',
+    dirinuri: 'https://github.com/Zied-Guesmi/text2speech/blob/master/DATADIR.zip?raw=true'
   }
 };

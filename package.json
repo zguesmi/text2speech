@@ -1,18 +1,18 @@
 {
-  "name": "tts-dapp",
+  "name": "text2speech",
   "version": "1.0.0",
-  "description": "A simple dapp to convert text to speech",
+  "description": "text2speech is an Ethereum ready dapp that uses mimic text-to-speech engine to convert text files to speech and save them in wav format.",
   "main": "iexec.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Zied-Guesmi/tts-dapp.git"
+    "url": "git+https://github.com/Zied-Guesmi/text2speech.git"
   },
   "author": {
     "name": "Zied Guesmi"
   },
   "license": "",
-  "homepage": "https://github.com/Zied-Guesmi/tts-dapp.git",
-  "logo": "logo.svg",
+  "homepage": "https://zied-guesmi.github.io/text2speech/",
+  "logo": "logo.png",
   "dependencies": {
     "iexec-oracle-contract": "1.1.7"
   }

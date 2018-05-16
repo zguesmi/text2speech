@@ -1,80 +1,110 @@
-import os, sys, subprocess, yaml
+import os, sys, subprocess, yaml, yamlordereddictloader
 
 import custom_exceptions as customExceptions
 from consensus import Consensus
 from tts import TTS
 
 
+class Flag:
+
+    taskStarted = '-> processing file {}'
+    taskEnded = 'done..'
+    executionEnded = 'Text files have been moved to "{}" folder. Sound files are saved in "{}" folder.'
+
 
 class App:
 
-    APP_CONFIG_FILE = '{}/../app-config.yml'.format(os.path.dirname(os.path.realpath(__file__)))
-    _taskStartedFlag = '-> processing file {}'
-    _taskEndedFlag = 'done..'
-    _executionEndedFlag = 'Text files have been moved to "{}" folder. Sound files are saved in "{}" folder.'
+    _PREFIX = 'original'
+    _EXTENSION = '.wav'
+    _appConfigFile = '{}/app-config.yml'
 
 
     def __init__(self):
 
-        yml = yaml.load( open(self.APP_CONFIG_FILE) )
-
-        self._datadir = yml['datadir']
-        self._inputConfigFile = '{}/{}'.format( yml['datadir'], yml['input-config'] )
-        self._in = '{}/{}'.format( yml['datadir'], yml['input-dir'] )
-        self._out = '{}/{}'.format( yml['datadir'], yml['output-dir'] )
-        self._outputFileExtension = yml['output-files-extension']
-        self._executionEndedFlag = self._executionEndedFlag.format( yml['input-dir'], yml['output-dir'] )
-
-        self._inputConfig = self.parseConfigFile()
-
+        self._paths = {}
+        self.flag = Flag()
+        self.readAppConfigFile()
+        self.readInputConfigFile()
         self.prepareDatadir()
 
 
-    def fullPath(self, filename):
-        return '{}/{}'.format( self._datadir, filename )
+    @property
+    def datadir(self):
+        return self._paths['/']
 
 
-    def inFullPath(self, filename):
-        return '{}/{}'.format( self._in, filename )
+    @property
+    def out(self):
+        return self._paths['/out']
 
 
-    def outFullPath(self, filename):
-        return '{}/{}.{}'.format( self._out, filename, self._outputFileExtension )
+    def readAppConfigFile(self):
+
+        dirname = os.path.dirname
+        path = self._appConfigFile.format(dirname(dirname(os.path.realpath(__file__))))
+
+        if not os.path.isfile(path):
+            raise customExceptions.AppConfigNotFoundError(path)
+
+        try:
+            yml = yaml.load(open(path), yamlordereddictloader.SafeLoader)
+
+            self._paths['/'] = yml['datadir']
+            self._paths['/in'] = '{}/{}'.format(yml['datadir'], yml['input-dir'])
+            self._paths['/out'] = '{}/{}'.format(yml['datadir'], yml['output-dir'])
+            self._paths['conf'] = '{}/{}'.format(yml['datadir'], yml['input-config'])
+
+            self.flag.executionEnded = self.flag.executionEnded.format(yml['input-dir'], yml['output-dir'])
+
+        except Exception as e:
+            raise customExceptions.IllegalAppConfigFormatError(e)
+
+
+    def readInputConfigFile(self):
+
+        if not os.path.isfile(self._paths['conf']):
+            raise customExceptions.InputConfigNotFoundError(self._paths['conf'])
+
+        try:
+            self._inputConfig = yaml.load(open(self._paths['conf']), yamlordereddictloader.SafeLoader)
+        except Exception as e:
+            raise customExceptions.IllegalInputConfigFormatError(e)
+
+
+    def getAbsPath(self, dirname, filename, extension=''):
+        return '{}/{}{}'.format(self._paths[dirname], filename, extension)
 
 
     def isNotConfigFile(self, filename):
-        return self.fullPath(filename) != self._inputConfigFile
+        return self.getAbsPath('/', filename) != self._paths['conf']
 
 
-    def isTextFile(self, filename):
-        return ( os.path.isfile(self.fullPath(filename))
-            # and
-            and self.isNotConfigFile(filename) )
-
-
-    def parseConfigFile(self):
-
-        if not os.path.isfile(self._inputConfigFile):
-            raise customExceptions.ConfigFileNotFoundError(self._inputConfigFile)
-
-        try:
-            return yaml.load(open(self._inputConfigFile))
-        except Exception as e:
-            raise customExceptions.UnrespectedConfigFormatError(e)
+    def isFile(self, filename):
+        return ( os.path.isfile(self.getAbsPath('/', filename)) and
+            self.isNotConfigFile(filename) )
 
 
     def prepareDatadir(self):
-    
+
         try:
-            os.mkdir(self._in)
+            datadirContent = os.listdir(self._paths['/'])
+            os.mkdir(self._paths['/in'])
+            os.mkdir(self._paths['/out'])
 
-            for f in [ f for f in os.listdir(self._datadir) if self.isTextFile(f) ]:
-                subprocess.call([ 'mv', self.fullPath(f), self._in ])
-
-            os.mkdir(self._out)
+            for filename in [ f for f in datadirContent if self.isFile(f) ]:
+                subprocess.call([ 'mv', self.getAbsPath('/', filename), self._paths['/in'] ])
 
         except Exception as e:
             raise customExceptions.FatalError(e)
+
+
+    def renameInputFiles(self):
+
+        for filename in os.listdir(self._paths['/in']):
+            oldPath = self.getAbsPath('/in', filename)
+            newName = '{}-{}'.format(self._PREFIX, filename)
+            newPath = self.getAbsPath('/in', newName)
+            subprocess.call([ 'mv', oldPath, newPath ])
 
 
     def main(self):
@@ -83,13 +113,13 @@ class App:
             
             try:
 
-                print(self._taskStartedFlag.format(filename))
+                print(self.flag.taskStarted.format(filename))
                 
-                path = self.inFullPath(filename)
+                path = self.getAbsPath('/in', filename)
 
                 if not os.path.isfile(path):
 
-                    if os.path.isfile(self.fullPath(filename)):
+                    if os.path.isfile(self.getAbsPath('/', filename)):
                         raise customExceptions.FileTypeNotSupportedError(filename)
 
                     raise customExceptions.FileNotFoundError(filename)
@@ -98,20 +128,22 @@ class App:
                     path=path,
                     voice=params['voice'],
                     latency=params['latency'],
-                    out=self.outFullPath(filename)
+                    out=self.getAbsPath('/out', filename)
                 )
                 
-                print(self._taskEndedFlag)
+                print(self.flag.taskEnded)
 
             except customExceptions.CustomError:
                 pass
             except Exception as e:
                 print(e)
 
-        print(self._executionEndedFlag)
+        self.renameInputFiles()
+
+        print(self.flag.executionEnded)
 
 
 if __name__ == '__main__':
     app = App()
     app.main()
-    Consensus(app.APP_CONFIG_FILE).create()
+    Consensus(datadir=app.datadir, outputdir=app.out)
