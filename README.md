@@ -39,6 +39,8 @@ English (for now).
 
 ## Voices
 
+Male: ap, awb_time, awb, kal, kal16, rms.  
+Female: slt_hts, slt.  
 See voice samples [here](https://github.com/Zied-Guesmi/text2speech/tree/master/voice-samples).
 
 
