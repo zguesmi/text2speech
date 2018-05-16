@@ -50,7 +50,7 @@ See voice samples [here](https://github.com/Zied-Guesmi/text2speech/tree/master/
 - [mimic](https://github.com/MycroftAI/mimic) tts engine
 
 
-## Docker installation
+## Docker deployment
 
 After installing [docker](https://docs.docker.com/install/) and preparing your DATADIR folder, just grab the docker image from dockerhub and run it
 
@@ -101,8 +101,8 @@ Clone the app:
 
 Install python depedencies:
 
-    $ cd text2speech/app/
-    $ pip3 install -r requirements.txt
+    $ cd text2speech/
+    $ pip3 install -r app/requirements.txt
 
 
 ## TODO
