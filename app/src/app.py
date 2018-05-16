@@ -128,7 +128,7 @@ class App:
                     path=path,
                     voice=params['voice'],
                     latency=params['latency'],
-                    out=self.getAbsPath('/out', filename)
+                    out=self.getAbsPath('/out', filename, self._EXTENSION)
                 )
                 
                 print(self.flag.taskEnded)

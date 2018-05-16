@@ -1,14 +1,12 @@
 
 ### DON'T add trailing slashes in dir names
 
-# your text files folder absolute/relative (to the app.py script) path
+# your text files folder absolute/relative path (to the src/app.py script)
 datadir: /iexec
 
 
 # If you're not sure do not edit this section, it's used by the app
 
-input-config: input-config.yml    # contains text file names and params (voice, latency)
-input-dir: in                     # after the execution, input files will be moved to this folder
-output-dir: out                   # output dir
-output-files-extension: wav       # extension of sound files
-consensus-file: consensus.iexec   # contains hashes of sound files, used by iexec's PoCo protocol
+input-config: input-config.yml    # text file names and params (voice, latency)
+input-dir: in                     # this directory contains input files
+output-dir: out                   # output directory
